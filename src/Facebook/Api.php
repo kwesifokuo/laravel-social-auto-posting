@@ -2,7 +2,8 @@
 
 namespace Toolkito\Larasap\Facebook;
 
-use Facebook;
+// use Facebook;
+use JanuSoftware\Facebook\Facebook;
 use Illuminate\Support\Facades\Config;
 
 class Api
@@ -44,7 +45,7 @@ class Api
         self::$default_graph_version = Config::get('larasap.facebook.default_graph_version');
         self::$page_access_token = Config::get('larasap.facebook.page_access_token');
 
-        self::$fb = new \Facebook\Facebook([
+        self::$fb = new \JanuSoftware\Facebook\Facebook([
             'app_id' => self::$app_id,
             'app_secret' => self::$app_secret,
             'default_graph_version' => self::$default_graph_version,
@@ -65,9 +66,9 @@ class Api
         $data = compact('link', 'message');
         try {
             $response = self::$fb->post('/me/feed', $data, self::$page_access_token);
-        } catch(Facebook\Exceptions\FacebookResponseException $e) {
+        } catch(\JanuSoftware\Facebook\Exception\ResponseException $e) {
             throw new \Exception('Graph returned an error: '.$e->getMessage());
-        } catch(Facebook\Exceptions\FacebookSDKException $e) {
+        } catch(\JanuSoftware\Facebook\Exception\SDKException $e) {
             throw new \Exception('Facebook SDK returned an error: '.$e->getMessage());
         }
         $graphNode = $response->getGraphNode();
@@ -91,9 +92,9 @@ class Api
         ];
         try {
             $response = self::$fb->post('/me/photos', $data, self::$page_access_token);
-        } catch(Facebook\Exceptions\FacebookResponseException $e) {
+        } catch(\JanuSoftware\Facebook\Exception\ResponseException $e) {
             throw new \Exception('Graph returned an error: '.$e->getMessage());
-        } catch(Facebook\Exceptions\FacebookSDKException $e) {
+        } catch(\JanuSoftware\Facebook\Exception\SDKException $e) {
             throw new \Exception('Facebook SDK returned an error: '.$e->getMessage());
         }
         $graphNode = $response->getGraphNode();
@@ -115,9 +116,9 @@ class Api
         $data = compact('title','description');
         try {
             $response = self::$fb->uploadVideo('me', $video,$data, self::$page_access_token);
-        } catch(Facebook\Exceptions\FacebookResponseException $e) {
+        } catch(\JanuSoftware\Facebook\Exception\ResponseException $e) {
             throw new \Exception('Graph returned an error: '.$e->getMessage());
-        } catch(Facebook\Exceptions\FacebookSDKException $e) {
+        } catch(\JanuSoftware\Facebook\Exception\SDKException $e) {
             throw new \Exception('Facebook SDK returned an error: '.$e->getMessage());
         }
         $graphNode = $response->getGraphNode();

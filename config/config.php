@@ -21,7 +21,7 @@ return [
         'app_id' => '',
         'app_secret' => '',
         'default_graph_version' => '',
-        'page_access_token' => ''
+        'page_access_token' => 'v19.0'
     ],
 
     // Set Proxy for Servers that can not Access Social Networks due to Sanctions or ...
